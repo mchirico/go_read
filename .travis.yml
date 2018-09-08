@@ -1,0 +1,29 @@
+dist: trusty
+sudo: false
+matrix:
+  include:
+  - language: go
+    go:
+    - 1.11
+    env:
+    - GOMAXPROCS=4
+    os:
+    - linux
+    install:
+    - go get -u github.com/mchirico/date/...
+    before_install:
+    - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
+      > ./cc-test-reporter
+    - chmod +x ./cc-test-reporter
+    - "./cc-test-reporter before-build"
+    script:
+    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/grab
+    
+    after_success:
+    - cat c0.out > c.out
+    - bash <(curl -s https://codecov.io/bash)
+    - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
+
+
+
+
