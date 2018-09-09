@@ -10,17 +10,26 @@ import (
 	"strings"
 )
 
+func matches(text string) bool {
+
+	str := []string{"reply", "ladders",
+		"linkedin", "spammer", "root", "mchirico", "smtp"}
+
+	for _, v := range str {
+
+		if strings.Contains(text, v) {
+			return true
+		}
+	}
+	return false
+
+}
+
 func loop(text string, m map[string]int, tag string) {
 
 	r, _ := regexp.Compile("<([a-z|-]+@+[a-z|-]+.[a-z|-]+)>")
 
-	if strings.Contains(text, "reply") ||
-		strings.Contains(text, "ladders") ||
-		strings.Contains(text, "linkedin") ||
-		strings.Contains(text, "spamer") ||
-		strings.Contains(text, "root") ||
-		strings.Contains(text, "mchirico") ||
-		strings.Contains(text, "smtp") {
+	if matches(text) {
 		return
 	}
 

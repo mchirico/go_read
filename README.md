@@ -7,6 +7,6 @@
 
 ```bash
 go get -u github.com/mchirico/date/...
-go get -u github.com/mchirico/go_read
+go get -u github.com/mchirico/go_read/...
 
 ```
