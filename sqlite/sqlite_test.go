@@ -27,6 +27,8 @@ CREATE TRIGGER  IF NOT EXISTS insert_junk_timeEnter AFTER  INSERT ON junk
       UPDATE junk SET timeEnter = DATETIME('NOW')  WHERE rowid = new.rowid;
      END;
 
+PRAGMA synchronous=OFF;
+
 `)
 	sq.Exec("insert into junk (a,b) values (3,'2013-10-07 04:23:19.120-04:00')")
 
@@ -104,6 +106,7 @@ CREATE TRIGGER  IF NOT EXISTS insert_junk2_timeEnter AFTER  INSERT ON junk2
      END;
 
 
+PRAGMA synchronous=OFF;
 
 `)
 	sq.Exec("insert into junk (a,b) values (3,'2013-10-07 04:23:19.120-04:00')")

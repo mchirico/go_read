@@ -48,6 +48,8 @@ CREATE TRIGGER  IF NOT EXISTS insert_mail2_timeEnter AFTER  INSERT ON mail2
 
 DELETE FROM mail2;
 
+PRAGMA synchronous=OFF;
+
 `)
 
 	for _, v := range records {
