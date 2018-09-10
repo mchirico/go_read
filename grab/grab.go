@@ -28,7 +28,7 @@ func matches(text string) bool {
 
 func loop(text string, m map[string]int, tag string, records [][]string) [][]string {
 
-	r, _ := regexp.Compile("from=<([a-z|-|.]+@+[a-z|-]+.[a-z|-]+)>")
+	r, _ := regexp.Compile("from=<([a-z|-|_|.]+@+[a-z|-]+.[a-z|-]+)>")
 
 	if matches(text) {
 		return records

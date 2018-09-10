@@ -7,7 +7,6 @@ import (
 	"strings"
 )
 
-
 func InsertData(file string, records [][]string) int {
 
 	count := 0
