@@ -28,7 +28,7 @@ func matches(text string) bool {
 
 func loop(text string, m map[string]int, tag string, records [][]string) [][]string {
 
-	r, _ := regexp.Compile("<([a-z|-]+@+[a-z|-]+.[a-z|-]+)>")
+	r, _ := regexp.Compile("from=<([a-z|-|.]+@+[a-z|-]+.[a-z|-]+)>")
 
 	if matches(text) {
 		return records
@@ -40,6 +40,9 @@ func loop(text string, m map[string]int, tag string, records [][]string) [][]str
 
 		email_time := tt.Format("2006-01-02 15:04:05-07:00")
 		email := r.FindString(text)
+
+		email = strings.Replace(email, "from=", "", -1)
+
 		fmt.Printf("%v, \t %v, \t%v\n", email_time, tag, email)
 
 		records = append(records, []string{tag, text, email, email_time})
