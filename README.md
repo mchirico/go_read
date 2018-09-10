@@ -2,6 +2,8 @@
 [![Maintainability](https://api.codeclimate.com/v1/badges/71a0b75a3329bb2178ff/maintainability)](https://codeclimate.com/github/mchirico/go_read/maintainability)
 # go_read
 
+A program to look at emails being `discarded` and `rejected`.
+
 
 ## Install
 
