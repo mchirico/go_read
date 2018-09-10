@@ -7,7 +7,7 @@
 
 ```bash
 go get -u github.com/mattn/go-sqlite3
-go get -u github.com/mchirico/date/...
+go get -u github.com/mchirico/date/parse
 go get -u github.com/mchirico/go_read/...
 
 ```
