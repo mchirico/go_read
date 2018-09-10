@@ -2,6 +2,7 @@ package grab
 
 import (
 	"fmt"
+	"os"
 	"reflect"
 	"testing"
 )
@@ -15,7 +16,9 @@ func TestRead(t *testing.T) {
 		"<sam@witssolutions.com>":        2,
 		"<ducky@gmail.com>":              1}
 
-	m := FileParse("../mockfiles/mail.log")
+	dbFile := "./junk.db"
+	os.Remove(dbFile)
+	m := FileParse("../mockfiles/mail.log", dbFile)
 	fmt.Println(m)
 
 	if !reflect.DeepEqual(expected, m) {

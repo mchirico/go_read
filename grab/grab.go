@@ -4,6 +4,7 @@ import (
 	"bufio"
 	"fmt"
 	"github.com/mchirico/date/parse"
+	"github.com/mchirico/go_read/analysis"
 	"log"
 	"os"
 	"regexp"
@@ -25,7 +26,7 @@ func matches(text string) bool {
 
 }
 
-func loop(text string, m map[string]int, tag string) {
+func loop(text string, m map[string]int, tag string, records [][]string) {
 
 	r, _ := regexp.Compile("<([a-z|-]+@+[a-z|-]+.[a-z|-]+)>")
 
@@ -41,12 +42,14 @@ func loop(text string, m map[string]int, tag string) {
 		email := r.FindString(text)
 		fmt.Printf("%v, \t %v, \t%v\n", email_time, tag, email)
 
+		records = append(records, []string{tag, text, email, email_time})
+
 		m[r.FindString(text)] += 1
 
 	}
 }
 
-func FileParse(file string) map[string]int {
+func FileParse(file string, dbFile string) map[string]int {
 
 	fmt.Printf("file: %v\n", file)
 	f, err := os.OpenFile(file, os.O_RDWR|os.O_CREATE, 0600)
@@ -58,15 +61,17 @@ func FileParse(file string) map[string]int {
 
 	m := map[string]int{}
 
+	records := [][]string{}
+
 	scanner := bufio.NewScanner(f)
 	for scanner.Scan() {
 
 		if strings.Contains(scanner.Text(), "discard:") {
-			loop(scanner.Text(), m, "discard")
+			loop(scanner.Text(), m, "discard", records)
 		}
 
 		if strings.Contains(scanner.Text(), "reject: ") {
-			loop(scanner.Text(), m, " reject")
+			loop(scanner.Text(), m, " reject", records)
 		}
 
 	}
@@ -74,6 +79,8 @@ func FileParse(file string) map[string]int {
 	if err := scanner.Err(); err != nil {
 		log.Fatal(err)
 	}
+
+	analysis.InsertData(dbFile, records)
 
 	return m
 
