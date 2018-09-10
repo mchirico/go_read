@@ -20,7 +20,8 @@ matrix:
     script:
     - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/grab
     - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/sqlite
-    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/analysis        
+    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/analysis
+    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/web            
     after_success:
     - cat c0.out > c.out
     - bash <(curl -s https://codecov.io/bash)
