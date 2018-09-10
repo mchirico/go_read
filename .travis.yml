@@ -12,6 +12,7 @@ matrix:
     install:
     - go get -u github.com/mchirico/date/...
     - go get github.com/mattn/go-sqlite3
+    - go get github.com/gorilla/mux
     before_install:
     - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
       > ./cc-test-reporter
@@ -19,10 +20,11 @@ matrix:
     - "./cc-test-reporter before-build"
     script:
     - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/grab
-    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/sqlite
-    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/analysis        
+    - go test -race -v -coverprofile=c1.out github.com/mchirico/go_read/sqlite
+    - go test -race -v -coverprofile=c2.out github.com/mchirico/go_read/analysis
+    - go test -race -v -coverprofile=c3.out github.com/mchirico/go_read/cmd/gog            
     after_success:
-    - cat c0.out > c.out
+    - cat c0.out c1.out c2.out c3.out > c.out
     - bash <(curl -s https://codecov.io/bash)
     - "./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT"
 
