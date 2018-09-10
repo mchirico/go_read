@@ -11,6 +11,7 @@ matrix:
     - linux
     install:
     - go get -u github.com/mchirico/date/...
+    - go get github.com/mattn/go-sqlite3
     before_install:
     - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64
       > ./cc-test-reporter
@@ -18,7 +19,7 @@ matrix:
     - "./cc-test-reporter before-build"
     script:
     - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/grab
-    
+    - go test -race -v -coverprofile=c0.out github.com/mchirico/go_read/sqlite    
     after_success:
     - cat c0.out > c.out
     - bash <(curl -s https://codecov.io/bash)
