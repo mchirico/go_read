@@ -46,6 +46,7 @@ CREATE TRIGGER  IF NOT EXISTS insert_mail2_timeEnter AFTER  INSERT ON mail2
      END;
 
 
+DELETE FROM mail2;
 
 `)
 
@@ -60,7 +61,7 @@ CREATE TRIGGER  IF NOT EXISTS insert_mail2_timeEnter AFTER  INSERT ON mail2
 	sq.Exec(`
 
 insert into mail (tag,full,email,date)
-select j2.tag,j2.full,j2.email,j2.date from mail2 as j2 left outer join mail as j on
+select distinct j2.tag,j2.full,j2.email,j2.date from mail2 as j2 left outer join mail as j on
 (j.tag=j2.tag and j.full=j2.full and j.email=j2.email and j.date=j2.date) where j.email is null
 
 `)
