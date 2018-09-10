@@ -2,15 +2,14 @@ package grab
 
 import (
 	"fmt"
+	"github.com/mchirico/go_read/sqlite"
 	"log"
 	"os"
 	"reflect"
-	"github.com/mchirico/go_read/sqlite"
 
 	_ "github.com/mattn/go-sqlite3"
 	"testing"
 )
-
 
 func checkCount(dbFile string, stmt string) int {
 
@@ -30,7 +29,7 @@ func checkCount(dbFile string, stmt string) int {
 			log.Fatal(err)
 		}
 
-		fmt.Println("Count:",count)
+		fmt.Println("Count:", count)
 	}
 	err := rows.Err()
 	if err != nil {
@@ -40,15 +39,21 @@ func checkCount(dbFile string, stmt string) int {
 	return count
 }
 
-
 func TestRead(t *testing.T) {
 
-	expected := map[string]int{"<hemanth@codestak.com>": 1,
-		"<vishal@ibusinesssolution.com>": 1,
-		"<ducky@cwstat.com>":             1,
-		"<ducky@aipiggybot.io>":          1,
-		"<sam@witssolutions.com>":        2,
-		"<ducky@gmail.com>":              1}
+	expected := map[string]int{"<ducky@cwstat.com>": 1,
+		"<do-not-reply@stackoverflow.email>": 6,
+		"<sam@witssolutions.com>":            2,
+		"<praveen@sagebeans.com>":            1,
+		"<smtpvassa@gmail.com>":              2,
+		"<ducky@gmail.com>":                  1,
+		"<no-reply@jobvite.com>":             1,
+		"<spameri@tiscali.it>":               5,
+		"<hemanth@codestak.com>":             1,
+		"<notification@jobvite.com>":         1,
+		"<vishal@ibusinesssolution.com>":     1,
+		"<ducky@cwxstat.com>":                1,
+		"<ducky@aipiggybot.io>":              1,}
 
 	dbFile := "./junk.db"
 	os.Remove(dbFile)
@@ -56,14 +61,12 @@ func TestRead(t *testing.T) {
 	fmt.Println(m)
 
 	if !reflect.DeepEqual(expected, m) {
-		t.Fatalf("Results not equal")
+		t.Fatalf("Results not equal: %v\n", m)
 	}
 
-	count := checkCount(dbFile,"select count(*) as count from mail;")
-	if count != 7 {
-		t.Fatalf("Count is off: %v\n",count)
+	count := checkCount(dbFile, "select count(*) as count from mail;")
+	if count != 24 {
+		t.Fatalf("Count is off: %v\n", count)
 	}
-
-
 
 }

@@ -13,8 +13,8 @@ import (
 
 func matches(text string) bool {
 
-	str := []string{"reply", "ladders",
-		"linkedin", "spammer", "root", "mchirico", "smtp"}
+	str := []string{"ladders",
+		"linkedin", "spammer", "root", "mchirico"}
 
 	for _, v := range str {
 
