@@ -3,7 +3,7 @@ package grab
 import (
 	"bufio"
 	"fmt"
-	"github.com/mchirico/date/dateparse"
+	"github.com/mchirico/date/parse"
 	"log"
 	"os"
 	"regexp"
@@ -35,7 +35,7 @@ func loop(text string, m map[string]int, tag string) {
 
 	if r.MatchString(text) {
 		s := text[0:15]
-		tt, _ := dateparse.DateTimeParse(s).NewYork()
+		tt, _ := parse.DateTimeParse(s).NewYork()
 
 		email_time := tt.Format("2006-01-02 3:04 PM")
 		email := r.FindString(text)
