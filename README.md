@@ -1,5 +1,5 @@
 [![Build Status](https://travis-ci.org/mchirico/go_read.svg?branch=develop)](https://travis-ci.org/mchirico/go_read)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/71a0b75a3329bb2178ff/maintainability)](https://codeclimate.com/github/mchirico/go_read/maintainability)
 # go_read
 
 
