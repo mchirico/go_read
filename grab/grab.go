@@ -14,7 +14,7 @@ import (
 func matches(text string) bool {
 
 	str := []string{"ladders",
-		"linkedin", "spammer", "root", "mchirico"}
+		"linkedin", "spammer", "root"}
 
 	for _, v := range str {
 
