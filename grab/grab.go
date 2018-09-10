@@ -26,19 +26,19 @@ func matches(text string) bool {
 
 }
 
-func loop(text string, m map[string]int, tag string, records [][]string) {
+func loop(text string, m map[string]int, tag string, records [][]string) [][]string {
 
 	r, _ := regexp.Compile("<([a-z|-]+@+[a-z|-]+.[a-z|-]+)>")
 
 	if matches(text) {
-		return
+		return records
 	}
 
 	if r.MatchString(text) {
 		s := text[0:15]
 		tt, _ := parse.DateTimeParse(s).NewYork()
 
-		email_time := tt.Format("2006-01-02 3:04 PM")
+		email_time := tt.Format("2006-01-02 15:04:05-07:00")
 		email := r.FindString(text)
 		fmt.Printf("%v, \t %v, \t%v\n", email_time, tag, email)
 
@@ -47,6 +47,8 @@ func loop(text string, m map[string]int, tag string, records [][]string) {
 		m[r.FindString(text)] += 1
 
 	}
+
+	return records
 }
 
 func FileParse(file string, dbFile string) map[string]int {
@@ -67,11 +69,11 @@ func FileParse(file string, dbFile string) map[string]int {
 	for scanner.Scan() {
 
 		if strings.Contains(scanner.Text(), "discard:") {
-			loop(scanner.Text(), m, "discard", records)
+			records = loop(scanner.Text(), m, "discard", records)
 		}
 
 		if strings.Contains(scanner.Text(), "reject: ") {
-			loop(scanner.Text(), m, " reject", records)
+			records = loop(scanner.Text(), m, " reject", records)
 		}
 
 	}

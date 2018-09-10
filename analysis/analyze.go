@@ -80,7 +80,7 @@ select j2.tag,j2.full,j2.email,j2.date from mail2 as j2 left outer join mail as 
 		}
 
 		count += 1
-		fmt.Println(tag, full, email, date, timeEnter)
+
 	}
 	err := rows.Err()
 	if err != nil {

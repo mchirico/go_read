@@ -2,10 +2,44 @@ package grab
 
 import (
 	"fmt"
+	"log"
 	"os"
 	"reflect"
+	"github.com/mchirico/go_read/sqlite"
+
+	_ "github.com/mattn/go-sqlite3"
 	"testing"
 )
+
+
+func checkCount(dbFile string, stmt string) int {
+
+	var count int
+
+	sq := &sqlite.SQL{}
+
+	sq.OpenDB(dbFile)
+	defer sq.Close()
+
+	rows := sq.Query(stmt)
+	defer rows.Close()
+	for rows.Next() {
+
+		err := rows.Scan(&count)
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		fmt.Println("Count:",count)
+	}
+	err := rows.Err()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return count
+}
+
 
 func TestRead(t *testing.T) {
 
@@ -24,5 +58,12 @@ func TestRead(t *testing.T) {
 	if !reflect.DeepEqual(expected, m) {
 		t.Fatalf("Results not equal")
 	}
+
+	count := checkCount(dbFile,"select count(*) as count from mail;")
+	if count != 7 {
+		t.Fatalf("Count is off: %v\n",count)
+	}
+
+
 
 }
