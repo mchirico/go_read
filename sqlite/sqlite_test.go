@@ -144,7 +144,7 @@ select j2.a,j2.b from junk2 as j2 left outer join junk as j on
 }
 
 func TestInsert(t *testing.T) {
-	
+
 	if Setup() != 3 {
 		t.Fatalf("Count should equal 3: %v\n", Setup())
 	}
