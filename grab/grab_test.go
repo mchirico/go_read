@@ -42,6 +42,7 @@ func checkCount(dbFile string, stmt string) int {
 func TestRead(t *testing.T) {
 
 	expected := map[string]int{"from=<gaurav.jha@acsicorp.com>": 1,
+		"from=<sourceinfotechinc4@gmail.com>":      1,
 		"from=<sam@witssolutions.com>":             2,
 		"from=<pushkar.prabhudesai@collabera.com>": 1,
 		"from=<support@aipiggybot.io>":             1,
@@ -69,7 +70,7 @@ func TestRead(t *testing.T) {
 	}
 
 	count := checkCount(dbFile, "select count(*) as count from mail;")
-	if count != 23 {
+	if count != 24 {
 		t.Fatalf("Count is off: %v\n", count)
 	}
 
